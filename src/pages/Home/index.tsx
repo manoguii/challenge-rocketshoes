@@ -6,7 +6,7 @@ import { api } from '../../services/api';
 import { formatPrice } from '../../util/format';
 import { useCart } from '../../hooks/useCart';
 
-export interface Product {
+interface Product {
   id: number;
   title: string;
   price: number;

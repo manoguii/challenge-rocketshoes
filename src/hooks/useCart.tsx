@@ -35,11 +35,22 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const addProduct = async (productId: number) => {
     try {
       const response = await api.get('/products')
-      const data = response.data
-      const productsClicked = data.find((product: Product) => product.id === productId)
-      setCart((state) => [...state, productsClicked])
-    } catch(erro) {
-      console.log(erro)
+      const newArray = response.data.map((product: Product) => {
+        return {
+          ...product,
+          amount: 0
+        }
+      })
+      const productsClicked = newArray.find((product: Product) => product.id === productId)
+
+      if(productsClicked.length > 0) {
+        setCart((state) => [...state, productsClicked])
+      }else {
+        toast('Adicione uma quantidade', {
+        })
+      } 
+    } catch {
+      
     }
   };
 
