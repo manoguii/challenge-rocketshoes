@@ -38,12 +38,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
       const newArray = response.data.map((product: Product) => {
         return {
           ...product,
-          amount: 0
+          amount: 1
         }
       })
       const productsClicked = newArray.find((product: Product) => product.id === productId)
 
-      if(productsClicked.length > 0) {
+      if(productsClicked.amount > 0) {
         setCart((state) => [...state, productsClicked])
       }else {
         toast('Adicione uma quantidade', {
@@ -57,6 +57,12 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const removeProduct = (productId: number) => {
     try {
       // TODO
+      const productsClicked = cart.find(product => product.id === productId)
+      const newArray = cart.filter((product) => {
+        return product.id !== productsClicked?.id
+      })
+      
+      setCart(newArray)
     } catch {
       // TODO
     }
